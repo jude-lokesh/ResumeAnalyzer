@@ -15,6 +15,12 @@ uploaded_file = st.file_uploader(
     type=["pdf"]
 )
 
+job_description = st.text_area(
+    "Enter Job Description",
+    placeholder="Paste the Job Description here...",
+    height=250
+)
+
 if uploaded_file is not None:
 
     st.success(f"Uploaded: {uploaded_file.name}")
@@ -25,7 +31,8 @@ if uploaded_file is not None:
 
             response = requests.post(
                 "http://localhost:8000/screening/",
-                files={"resume": uploaded_file}
+                files={"resume": uploaded_file},
+                data={"job_description": job_description}
             )
 
         if response.status_code == 200:
